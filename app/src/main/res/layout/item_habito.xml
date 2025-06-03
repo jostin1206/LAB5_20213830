@@ -39,5 +39,15 @@
             android:layout_height="wrap_content"
             android:text="Fecha y hora de inicio" />
 
+        <Button
+            android:id="@+id/btnEliminar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:backgroundTint="@android:color/holo_red_dark"
+            android:text="Eliminar"
+            android:textColor="@android:color/white" />
+
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>

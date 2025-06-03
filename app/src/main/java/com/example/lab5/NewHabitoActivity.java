@@ -89,7 +89,7 @@ public class NewHabitoActivity extends AppCompatActivity {
             lista.add(nuevo);
             guardarHabitos(lista);
 
-            Toast.makeText(this, "Hábito guardado", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Hábito guardado", Toast.LENGTH_SHORT).show();
 
 
 
@@ -113,7 +113,12 @@ public class NewHabitoActivity extends AppCompatActivity {
 
             AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
             if (alarmManager != null) {
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP, tiempoInicial, pendingIntent);
+
+                //alarmManager.setExact(AlarmManager.RTC_WAKEUP, tiempoInicial, pendingIntent);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, tiempoInicial, pendingIntent);
+                //alarmManager.setExact(AlarmManager.RTC_WAKEUP, tiempoInicial, pendingIntent);
+
+
             }
 
 

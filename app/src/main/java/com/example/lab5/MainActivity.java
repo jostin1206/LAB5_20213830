@@ -2,6 +2,7 @@ package com.example.lab5;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -11,6 +12,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         preferences = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+
        // aqui se pide permiso de notificaciones (Android 13+)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
@@ -56,6 +59,16 @@ public class MainActivity extends AppCompatActivity {
                         new String[]{Manifest.permission.POST_NOTIFICATIONS}, 1);
             }
         }
+/*
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            if (alarmManager != null && !alarmManager.canScheduleExactAlarms()) {
+                Intent intent = new Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
+                startActivity(intent); // Esto abre el diálogo para que el usuario apruebe
+            }
+        }*/
+
+
         // Mostramos saludo y mensaje guardado
        // String nombre = preferences.getString(KEY_NAME, "Usuario");
 
@@ -106,6 +119,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        preferences = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+
+        String nombre = preferences.getString(KEY_NAME, "Usuario");
+        String mensaje = preferences.getString(KEY_MSG, "¡Sigue con tus buenos hábitos!");
+
+        binding.textSaludo.setText("¡Hola, " + nombre + "!");
+        binding.textMensaje.setText(mensaje);
+    }
 
 
     // esto será un lanzador para seleccionar imagen de la galería

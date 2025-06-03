@@ -64,6 +64,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Seleccionar fecha"
+        android:textColor="@android:color/white"
+        android:backgroundTint="#E64A19"
         app:layout_constraintTop_toBottomOf="@id/editFrecuencia"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -75,6 +77,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Seleccionar hora"
+        android:textColor="@android:color/white"
+        android:backgroundTint="#E64A19"
         app:layout_constraintTop_toBottomOf="@id/btnFecha"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -86,6 +90,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:text="Guardar hábito"
+        android:textColor="@android:color/white"
+        android:backgroundTint="#689F38"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

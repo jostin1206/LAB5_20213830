@@ -93,7 +93,7 @@ public class SettingsActivity extends AppCompatActivity {
                 );
             }
 
-            Toast.makeText(this, "Configuración guardada y notificación activada", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Configuración guardada y notificación activada", Toast.LENGTH_SHORT).show();
             finish(); // volver a la pantalla principal
         });
 

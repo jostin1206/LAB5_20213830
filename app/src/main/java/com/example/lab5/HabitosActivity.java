@@ -3,6 +3,7 @@ package com.example.lab5;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,8 +45,10 @@ public class HabitosActivity extends AppCompatActivity {
             listaHabitos = new ArrayList<>();
         }
 
-        // Configurar RecyclerView
-        adapter = new HabitosAdapter(listaHabitos);
+        // Configuramos RecyclerView
+        //adapter = new HabitosAdapter(listaHabitos);
+        adapter = new HabitosAdapter(listaHabitos, () -> binding.textVacio.setVisibility(View.VISIBLE));
+
         binding.recyclerHabitos.setLayoutManager(new LinearLayoutManager(this));
         binding.recyclerHabitos.setAdapter(adapter);
 
@@ -54,12 +57,44 @@ public class HabitosActivity extends AppCompatActivity {
             Intent intent = new Intent(this, NewHabitoActivity.class);
             startActivity(intent);
         });
+
+        listaHabitos = new ArrayList<>();
+        adapter = new HabitosAdapter(listaHabitos, () -> binding.textVacio.setVisibility(View.VISIBLE));
+        binding.recyclerHabitos.setLayoutManager(new LinearLayoutManager(this));
+        binding.recyclerHabitos.setAdapter(adapter);
+
     }
+    /*
     @Override
     protected void onResume() {
         super.onResume();
         cargarHabitos();
+    }*/
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        listaHabitos.clear();
+        listaHabitos.addAll(obtenerHabitos());
+        adapter.notifyDataSetChanged();
+
+        if (listaHabitos.isEmpty()) {
+            binding.textVacio.setVisibility(View.VISIBLE);
+        } else {
+            binding.textVacio.setVisibility(View.GONE);
+        }
     }
+    private List<Habito> obtenerHabitos() {
+        String jsonHabitos = preferences.getString(KEY_HABITOS, null);
+        if (jsonHabitos != null) {
+            Type tipoLista = new TypeToken<List<Habito>>() {}.getType();
+            return new Gson().fromJson(jsonHabitos, tipoLista);
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    /*
     private void cargarHabitos() {
         String jsonHabitos = preferences.getString(KEY_HABITOS, null);
         if (jsonHabitos != null) {
@@ -69,9 +104,44 @@ public class HabitosActivity extends AppCompatActivity {
             listaHabitos = new ArrayList<>();
         }
 
-        adapter = new HabitosAdapter(listaHabitos);
+        //adapter = new HabitosAdapter(listaHabitos);
+        adapter = new HabitosAdapter(listaHabitos, () -> binding.textVacio.setVisibility(View.VISIBLE));
+
+
         binding.recyclerHabitos.setLayoutManager(new LinearLayoutManager(this));
         binding.recyclerHabitos.setAdapter(adapter);
+        //mostramos mensaje si no hay nada
+        if (listaHabitos.isEmpty()) {
+            binding.textVacio.setVisibility(View.VISIBLE);
+        } else {
+            binding.textVacio.setVisibility(View.GONE);
+        }
+
+    }*/
+
+    private void cargarHabitos() {
+        String jsonHabitos = preferences.getString(KEY_HABITOS, null);
+        if (jsonHabitos != null) {
+            Type tipoLista = new TypeToken<List<Habito>>() {}.getType();
+            listaHabitos = new Gson().fromJson(jsonHabitos, tipoLista);
+        } else {
+            listaHabitos = new ArrayList<>();
+        }
+
+        // IMPORTANTE: recrea el adapter con la nueva lista actualizada
+        adapter = new HabitosAdapter(listaHabitos, () -> binding.textVacio.setVisibility(View.VISIBLE));
+        binding.recyclerHabitos.setLayoutManager(new LinearLayoutManager(this));
+        binding.recyclerHabitos.setAdapter(adapter);
+
+        // Mostrar u ocultar mensaje vacío
+        if (listaHabitos.isEmpty()) {
+            binding.textVacio.setVisibility(View.VISIBLE);
+        } else {
+            binding.textVacio.setVisibility(View.GONE);
+        }
     }
+
+
+
 
 }
